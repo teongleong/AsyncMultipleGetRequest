@@ -12,11 +12,13 @@ async def fetch(url, session):
         date = response.headers.get("DATE")
         status = response.status
         #print("{}:{} with delay {}".format(date, response.url, delay))
-        #print("status: {}\n".format(status))
-        if (status == 200):
+        print("status: {}\n".format(status))
+        if status == 200:
             return await response.read()
-        else:
+        else if status == 404:
             return None
+        else if status == 403:
+            return status
 
 
 async def bound_fetch(sem, url, id, session):
@@ -36,7 +38,7 @@ item_url_tail = "?locale=en_US&apikey=a7z4utbr34kds8hrv7khf5qfzsu3u9tw"
 
 async def run(start, end):
     
-    f = open("itemid-{}-{}.txt".format(start, end), "a", encoding='utf8')
+    f = open("data/itemdata-{}-{}.txt".format(start, end), "a", encoding='utf8')
     #url = "http://localhost:8080/{}"
     tasks = []
     # create instance of Semaphore
@@ -48,8 +50,8 @@ async def run(start, end):
     # Create client session that will ensure we dont open new connection
     # per each request.
     async with ClientSession() as session:
-        #print("start {}, end {}".format(start, start+incr))
-        #print("check {}".format(start+incr < end))
+        print("start {}, end {}".format(start, start+incr))
+        print("check {}".format(start+incr < end))
         while start + incr <= end:
             data_dict.clear()
             for i in range(start, start + incr): # 8800 8900
@@ -77,8 +79,8 @@ async def run(start, end):
 loop = asyncio.get_event_loop()
 
 range_incr = 1000
-range_start = 153001
-range_end = 154001
+range_start = 53000
+range_end = 143001
 
 while range_start + range_incr <= range_end:
     print("Started " + str(range_start))
@@ -86,8 +88,6 @@ while range_start + range_incr <= range_end:
     loop.run_until_complete(future)
     print("Done " + str(range_start))
     range_start += range_incr
-    
-
 
 #async def periodic():
 #    while True:
