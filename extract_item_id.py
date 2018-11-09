@@ -2,8 +2,12 @@ import json
 
 item_id_file_name = "data/item-name-id.txt"
 
+
 data_file_list = [
-    "itemdata-144455-145000.txt", 
+]
+
+data_file_list2 = [
+    "itemdata-144001-145000.txt",
     "itemdata-145001-146000.txt", 
     "itemdata-146001-147000.txt", 
     "itemdata-147001-148000.txt", 
@@ -27,6 +31,18 @@ data_file_list = [
     "itemdata-165001-166000.txt"
 ]
 
+for i in range(0,144):
+    data_file_list.append("itemdata-"+str(i*1000)+"-"+str(i*1000+999)+".txt")
+
+#for i in range(0, 144):
+#    print(data_file_list[i])
+
+for filename in data_file_list2:
+    data_file_list.append(filename)
+
+for filename in data_file_list:
+    print(filename)
+
 # delete all content of the file
 def clear_file(infile):
     infile.seek(0)
@@ -48,7 +64,5 @@ for fileName in data_file_list:
         print(json_data["name"])
         item_id_file.write(json_data["name"]+'\t'+str(json_data["id"])+'\n')
 
-
 item_id_file.close()
 item_data_file.close()
-

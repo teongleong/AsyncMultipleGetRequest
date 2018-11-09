@@ -1,6 +1,7 @@
 import requests
 import json
-
+import time
+import datetime
 
 # r = requests.get("https://us.api.battle.net/wow/character/frostmourne/Blindasfox?locale=en_US&apikey=a7z4utbr34kds8hrv7khf5qfzsu3u9tw")
 
@@ -36,17 +37,20 @@ from datetime import datetime
 
 import urllib.request
 
-print('Beginning file download with urllib2...')
+#print('Beginning file download with urllib2...')
 
-srcPath = 'http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg'  
+#srcPath = 'http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg'  
 srcPath2 = fileURL
-destPath = 'C:/Users/teongleong/Downloads/cat.jpg'
-destPath2 = 'C:/Users/teongleong/Downloads/' + str(modTime) + '.json';
+#destPath = 'C:/Users/teongleong/Downloads/cat.jpg'
+datetime_string = datetime.now().isoformat(timespec='minutes')
+datetime_string = datetime_string.replace(":", "-")
+print(datetime_string)
+destPath2 = 'C:/Users/teongleong/Downloads/' + str(modTime) + '-' + datetime_string + '.json'
 	
 import os.path
 if (not os.path.exists(destPath2)): 
-	print("no file found, proceed to download")
+	print("New file, proceed to download")
 	urllib.request.urlretrieve(srcPath2, destPath2) 
 	print("done")
 else:
-	print("downloaded already")
+	print("No new file")
